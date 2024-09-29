@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Follower Bot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #response {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+    <script>
+        async function submitForm(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const user = document.getElementById('username').value; // Get the username from input
+            const responseDiv = document.getElementById('response'); // Reference to the response div
+            responseDiv.innerHTML = ""; // Clear previous response
+
+            // Make a POST request to the API
+            try {
+                const response = await fetch('/send-follower', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ user }), // Send the username as JSON
+                });
+
+                const data = await response.json();
+
+                // Display the response message
+                if (data.status) {
+                    responseDiv.innerHTML = `<strong>Status:</strong> ${data.status}<br><strong>Message:</strong> ${data.returnMessage || 'No message available.'}`;
+                } else {
+                    responseDiv.innerHTML = `<strong>Success!</strong> ${JSON.stringify(data)}`;
+                }
+            } catch (error) {
+                responseDiv.innerHTML = `<strong>Error:</strong> ${error.message}`;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Instagram Follower Bot</h1>
+    <form id="followerForm" onsubmit="submitForm(event)">
+        <label for="username">Enter Instagram Username:</label>
+        <input type="text" id="username" name="username" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="response"></div> <!-- Div for displaying response messages -->
+</body>
+</html>
