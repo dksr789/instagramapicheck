@@ -13,33 +13,32 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Endpoint to handle sending followers
 app.post('/send-follower', async (req, res) => {
-    const user = req.body.user; // Extract user from the request body
+    const user = req.body.user;
 
-    // Ensure the user is defined
     if (!user) {
         return res.status(400).json({ status: 'error', message: 'User is required.' });
     }
 
-    // Prepare the payload
     const payload = {
-        captcha: "", // Assuming no captcha for testing
+        captcha: "",
         page: "3933",
         free_email: "",
         user: user,
         product_id: "478"
     };
 
-    // Request headers
     const headers = {
         'Accept': 'text/html, */*; q=0.01',
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         'X-Requested-With': 'XMLHttpRequest',
         'Origin': 'https://www.instafollowers.co',
         'Referer': 'https://www.instafollowers.co/free-instagram-followers',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:130.0) Gecko/20100101 Firefox/130.0',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'DNT': '1',
+        'Upgrade-Insecure-Requests': '1'
     };
 
-    // Debug log
     console.log('Sending request to https://www.instafollowers.co/free-profile with payload:', payload);
 
     try {
@@ -52,6 +51,7 @@ app.post('/send-follower', async (req, res) => {
     } catch (error) {
         console.error('Error in request:', error);
         if (error.response) {
+            console.log('Response data:', error.response.data); // Log response data
             res.status(error.response.status).json(error.response.data);
         } else {
             res.status(500).json({ status: 'error', message: 'An unexpected error occurred.' });
