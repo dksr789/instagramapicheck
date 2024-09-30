@@ -8,7 +8,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Set up the HTTP proxy
-const proxyUrl = 'http://user-sp1v2wmc2y-sessionduration-30:fOl7bCyk_4e1NEv9ey@gate.smartproxy.com:10003'; 
+const proxyUrl = 'http://user-sp1v2wmc2y-sessionduration-60:fOl7bCyk_4e1NEv9ey@us.smartproxy.com:10001'; 
 const proxyAgent = new HttpsProxyAgent(proxyUrl);
 
 app.use(bodyParser.json());
