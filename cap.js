@@ -3,6 +3,7 @@ const axios = require('axios');
 const bodyParser = require('body-parser');
 const path = require('path');
 const { HttpsProxyAgent } = require('https-proxy-agent');
+const cors = require('cors'); // Import cors
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -11,6 +12,8 @@ const PORT = process.env.PORT || 3000;
 const proxyUrl = 'http://user-sp1v2wmc2y-sessionduration-60:fOl7bCyk_4e1NEv9ey@us.smartproxy.com:10001'; 
 const proxyAgent = new HttpsProxyAgent(proxyUrl);
 
+// Middleware
+app.use(cors()); // Use cors middleware
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
